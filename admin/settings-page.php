@@ -1,10 +1,4 @@
 <?php
-/**
- * Plugin Name: Funeral Estimator Plugin
- * Description: Sets up the connection betwen client and host for displaying funeral Estimator.
- * Version: 1.0
- * Author: Josh Malcolm
- */
 // Adds the settings menu under "Settings"
 add_action('admin_menu', function () {
     add_options_page(

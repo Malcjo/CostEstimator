@@ -5,8 +5,15 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  build:{
-    outDir: path.resolve(__dirname, '../build'),
-    emptyOutDir: true,
+  build: {
+    outDir: '../build',
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/index.js`,
+        chunkFileNames: `assets/index-[name].js`,
+        assetFileNames: `assets/index.[ext]`
+      }
+    }
   }
 })
