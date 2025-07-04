@@ -1,0 +1,5 @@
+{
+  "layout": [
+    { "type": "StandardDropdown", "label": "Casket", "options": { "Pine": 500, "Oak": 700 } }
+  ]
+}

@@ -37,6 +37,6 @@ function feh_check_api_key($request) {
 
 // Dummy template fetch
 function feh_get_template($request) {
-    $template = file_get_contents(__DIR__ . '/database/templates/example-template.json');
+    $template = file_get_contents(__DIR__ . '/example-template.json');
     return json_decode($template, true);
 }
