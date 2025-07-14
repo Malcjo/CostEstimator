@@ -12,7 +12,11 @@ export default function AdminPanelDashboard({ mode = 'client', isPro = false }) 
   const renderTab = () => {
     switch (activeTab) {
       case 'Layout':
-        return <EstimatorLayout />;
+        return <EstimatorLayout 
+        activeTab={'Layout'}
+        onSave={(newConfig) =>{
+          console.log('Saved Layout: ', newConfig);
+        }}/>;
       case 'Design':
         return <EstimatorDesign />;
       case 'Pricing':
