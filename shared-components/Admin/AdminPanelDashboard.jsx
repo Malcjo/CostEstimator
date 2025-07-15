@@ -9,18 +9,36 @@ const tabs = ['Layout', 'Design', 'Pricing', 'Settings'];
 export default function AdminPanelDashboard({ mode = 'client', isPro = false }) {
   const [activeTab, setActiveTab] = useState('Layout');
 
+  const [config, setConfig] = useState({
+    layout:[],
+    pricing:{},
+    design:{},
+    settings:{}
+  });
+
+  const handleConfigSectionUpdate = (key, value) =>{
+    setConfig(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
+
   const renderTab = () => {
     switch (activeTab) {
       case 'Layout':
-        return <EstimatorLayout 
-        activeTab={'Layout'}
-        onSave={(newConfig) =>{
-          console.log('Saved Layout: ', newConfig);
-        }}/>;
+        return (
+          <EstimatorLayout
+            layout={config.layout}
+            onChange={(newLayout) => handleConfigSectionUpdate('layout', newLayout)}
+          />
+        );
       case 'Design':
         return <EstimatorDesign />;
       case 'Pricing':
-        return <PricingSettings />;
+        return <PricingSettings 
+        layout ={config.pricing}
+        onChange={(newConfig) =>{
+        }} />;
       case 'Settings':
         return <Settings mode={mode} />;
       default:
