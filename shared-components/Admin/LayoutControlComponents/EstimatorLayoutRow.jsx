@@ -2,38 +2,26 @@ import React, { useState, useEffect } from 'react';
 import LayoutRow from './LayoutRow';
 
 
-export default function EstimatorLayoutRow({rows: propRows, onConfigChange}) {
+export default function EstimatorLayoutRow({rows, onConfigChange}) {
 
-  const [rows, setRows] = useState(propRows);
-
-  useEffect(() =>{
-    setRows(propRows);
-  }, [propRows]);
-
-  useEffect(() =>{
-    onConfigChange(rows);
-  }, [rows]);
-
-  const addMainRow = () => {
-    setRows(prev => 
-        [...prev,
-            {
-                id: Date.now(),
-                label: '',
-                type: '',
-                pricingSet: '' 
-            }
-        ]);
-    };
-
-  const updateRow = updatedRow => {
-    setRows(prev =>
-      prev.map(row => (row.id === updatedRow.id ? updatedRow : row))
-    );
+  const addMainRow = () =>{
+    const newRows = [
+      ...rows,
+      {
+        id: Date.now(), label: '', type: '', pricingSet: '' 
+      }
+    ];
+    onConfigChange(newRows);
+  }
+  const updateRow = (updatedRow) =>{
+    const newRows = rows.map(row =>{
+      row.id === updatedRow.id ? updatedRow : row
+    });
+    onConfigChange(newRows);
   };
-
-  const removeMainRow = id => {
-    setRows(prev => prev.filter(row => row.id !== id));
+  const removeMainRow = (id) => {
+    const newRows = rows.filter(row => row.id !== id);
+    onConfigChange(newRows);
   };
 
   return (
