@@ -11,7 +11,7 @@ export default function AdminPanelDashboard({ mode = 'client', isPro = false }) 
 
   const [config, setConfig] = useState({
     layout:[],
-    pricing:{},
+    pricing:[],
     design:{},
     settings:{}
   });
@@ -36,9 +36,9 @@ export default function AdminPanelDashboard({ mode = 'client', isPro = false }) 
         return <EstimatorDesign />;
       case 'Pricing':
         return <PricingSettings 
-        layout ={config.pricing}
-        onChange={(newConfig) =>{
-        }} />;
+        pricing ={config.pricing}
+        onChange={(newPricing) => handleConfigSectionUpdate('pricing', newPricing)} 
+        />;
       case 'Settings':
         return <Settings mode={mode} />;
       default:

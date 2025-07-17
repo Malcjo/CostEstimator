@@ -5,17 +5,18 @@ import LayoutRow from './LayoutRow';
 export default function EstimatorLayoutRow({rows, onConfigChange}) {
 
   const addMainRow = () =>{
-    const newRows = [
-      ...rows,
-      {
-        id: Date.now(), label: '', type: '', pricingSet: '' 
-      }
-    ];
-    onConfigChange(newRows);
+    const newRows = {
+        id: Date.now(), 
+        label: '', 
+        type: '', 
+        pricingSet: '' 
+      };
+    onConfigChange([...rows, newRows]);
+    console.log(newRows);
   }
   const updateRow = (updatedRow) =>{
     const newRows = rows.map(row =>{
-      row.id === updatedRow.id ? updatedRow : row
+      return row.id === updatedRow.id ? updatedRow : row
     });
     onConfigChange(newRows);
   };
