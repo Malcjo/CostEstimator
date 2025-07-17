@@ -14,7 +14,7 @@ export default function PricingSettingsRow({ rows, onConfigChange }) {
 
   const updateGroup = (updatedGroup) =>{
     const newRows = rows.map(group =>{
-      group.id === updateGroup.id ? updateGroup : group
+      return group.id === updatedGroup.id ? updatedGroup : group
     });
     onConfigChange(newRows);
   }
