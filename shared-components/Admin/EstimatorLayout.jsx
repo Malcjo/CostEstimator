@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import EstimatorLayoutRow from './LayoutControlComponents/EstimatorLayoutRow';
 
-export default function EstimatorLayout({layout, onChange }) {
+export default function EstimatorLayout({layout, onChange, pricing_Groups }) {
   // Example: you might fetch/load saved config here
 
   return (
@@ -10,6 +10,7 @@ export default function EstimatorLayout({layout, onChange }) {
           <EstimatorLayoutRow
             rows={layout}
             onConfigChange={(newLayout) => onChange(newLayout)}
+            pricingGroups={pricing_Groups}
           />
 
           <h3>Current Layout JSON</h3>

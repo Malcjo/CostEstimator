@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PricingSettingsRow from "./PricingControlComponents/PricingSettingsRow";
 
 export default function PricingSettings({ pricing, onChange }) {
-  const [config, setConfig] = useState({ rows: [] });
   return (
     <div>
       <>

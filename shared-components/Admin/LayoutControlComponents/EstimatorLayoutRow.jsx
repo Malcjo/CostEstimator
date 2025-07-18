@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LayoutRow from './LayoutRow';
 
 
-export default function EstimatorLayoutRow({rows, onConfigChange}) {
+export default function EstimatorLayoutRow({rows, onConfigChange, pricingGroups}) {
 
   const addMainRow = () =>{
     const newRows = {
@@ -27,7 +27,6 @@ export default function EstimatorLayoutRow({rows, onConfigChange}) {
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
-      {/* Main Body */}
       <div style={{ flex: 1, padding: 16, borderRight: '1px solid #ccc' }}>
         <h1>Estimator Layout Control</h1>
 
@@ -37,6 +36,7 @@ export default function EstimatorLayoutRow({rows, onConfigChange}) {
             row={row}
             onChange={updateRow}
             onRemove={removeMainRow}
+            pricingGroups={pricingGroups}
           />
         ))}
       </div>
