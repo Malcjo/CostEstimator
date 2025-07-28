@@ -29,7 +29,7 @@ function ce_enqueue_admin_assets($hook) {
   $plugin_url = plugin_dir_url(__FILE__) . '../assets/';
 
     // Register first
-  wp_register_script('ce-admin-js', $plugin_url . 'index.js', [], null, true);
+  wp_register_script('ce-main-js', $plugin_url . 'index.js', [], null, true);
   
     // ✅ Localize AFTER registering
   wp_localize_script('ce-admin-js', 'CE_APP_DATA', [
@@ -37,9 +37,11 @@ function ce_enqueue_admin_assets($hook) {
     'pro' => true,
     'nonce' => wp_create_nonce('wp_rest'),
   ]);
+
+    wp_script_add_data('ce-main-js', 'type', 'module');
   
-  wp_enqueue_script('ce-admin-js', $plugin_url . 'index.js', [], null, true);
-  wp_enqueue_style('ce-admin-css', $plugin_url . 'index.css');
+  wp_enqueue_script('ce-main-js');
+  wp_enqueue_style('ce-main-css', $plugin_url . 'index.css');
 }
 
 

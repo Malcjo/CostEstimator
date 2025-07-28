@@ -12,7 +12,7 @@ export default function Settings({ mode, config, onUploadConfig }) {
     link.click();
 
     URL.revokeObjectURL(url);
-  }
+  };
 
   const uploadConfig = (e) => {
     const file = e.target.files[0];
@@ -21,6 +21,12 @@ export default function Settings({ mode, config, onUploadConfig }) {
       reader.onload = (event) =>{
         try{
           const json = JSON.parse(event.target.result);
+
+          const isValid = validateConfig(json);
+          if(!isValid){
+            alert("Invalid JSON structure. Make sure it has layout[], pricing[], design{}, and settings{}");
+            return;
+          }
           onUploadConfig(json);
         }
         catch (err){
@@ -29,8 +35,18 @@ export default function Settings({ mode, config, onUploadConfig }) {
       };
       reader.readAsText(file);
     }
-  }
+  };
 
+    const validateConfig = (data) => {
+    if (typeof data !== "object" || data === null) return false;
+
+    const hasLayout = Array.isArray(data.layout);
+    const hasPricing = Array.isArray(data.pricing);
+    const hasDesign = typeof data.design === "object" && data.design !== null;
+    const hasSettings = typeof data.settings === "object" && data.settings !== null;
+
+    return hasLayout && hasPricing && hasDesign && hasSettings;
+  };
   return (
     <div>
       <div>

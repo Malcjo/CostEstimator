@@ -27,7 +27,7 @@
  require_once plugin_dir_path(__FILE__) . 'public/shortcode.php';
  require_once plugin_dir_path(__FILE__) . 'admin/api.php';
 
- wp_localize_script('ce-admin-js', 'CE_APP_DATA', [
+ /*wp_localize_script('ce-admin-js', 'CE_APP_DATA', [
   'mode' => 'client',
   'pro' => true,
-]);
+]);*/

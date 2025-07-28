@@ -14,7 +14,9 @@ export default defineConfig({
   outDir: '../wordpress-plugin/build',
   emptyOutDir: true,
       rollupOptions: {
-        input:path.resolve(__dirname, 'index.html'),
+        input:{
+          main: path.resolve(__dirname, 'index.html'),
+      },
       output: {
         entryFileNames: 'assets/index.js',
         assetFileNames: (assetInfo) => {
