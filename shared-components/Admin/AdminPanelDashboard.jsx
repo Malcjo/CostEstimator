@@ -56,8 +56,12 @@ export default function AdminPanelDashboard({ mode = 'client', isPro = false }) 
       saveConfigToServer(updated);
       return updated
     })
-
   };
+
+  const handleUpdateConfig=(newConfig) =>{
+    setConfig(newConfig);
+    saveConfigToServer(newConfig);
+  }
 
   const renderTab = () => {
     switch (activeTab) {
@@ -77,14 +81,20 @@ export default function AdminPanelDashboard({ mode = 'client', isPro = false }) 
           onChange={(newPricing) => handleConfigSectionUpdate('pricing', newPricing)}
         />;
       case 'Settings':
-        return <Settings mode={mode} />;
+        return (
+          <Settings
+            mode={mode} 
+            config={config}
+            onUploadConfig={handleUpdateConfig}
+            />
+        );
       default:
         return null;
     }
   };
 
   return (
-    <div>
+    <div style={{ maxHeight: '90vh', padding: '1em' }}>
       <div style={{ display: 'flex', gap: '1em', borderBottom: '1px solid #ccc', paddingBottom: '0.5em' }}>
         {tabs.map(tab => (
           <button
@@ -103,7 +113,7 @@ export default function AdminPanelDashboard({ mode = 'client', isPro = false }) 
           </button>
         ))}
       </div>
-      <div style={{ marginTop: '1em' }}>
+      <div style={{ height: 'calc(100vh - 80px)', marginTop: '1em', overflowY: 'auto', }}>
         {renderTab()}
       </div>
     </div>
