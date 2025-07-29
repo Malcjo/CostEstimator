@@ -14,7 +14,7 @@ function fec_enqueue_client_script() {
 
     wp_enqueue_script(
         'cost-estimator-frontend',
-        $plugin_url . 'index.js', // <-- new bundle name after vite build
+        $plugin_url . 'index.js',
         [],
         null,
         true

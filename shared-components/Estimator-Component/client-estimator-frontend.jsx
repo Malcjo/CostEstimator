@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { createRoot } from "react-dom/client";
 import EstimatorApp from "./EstimatorApp";
 
@@ -10,3 +10,5 @@ fetch("/wp-json/cost-estimator/v1/config")
     const root = createRoot(rootEl);
     root.render(<EstimatorApp config={config} />);
   });
+
+  */

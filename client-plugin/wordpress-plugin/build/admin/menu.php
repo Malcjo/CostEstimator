@@ -32,7 +32,7 @@ function ce_enqueue_admin_assets($hook) {
   wp_register_script('ce-main-js', $plugin_url . 'index.js', [], null, true);
   
     // ✅ Localize AFTER registering
-  wp_localize_script('ce-admin-js', 'CE_APP_DATA', [
+  wp_localize_script('ce-main-js', 'CE_APP_DATA', [
     'mode' => 'client',
     'pro' => true,
     'nonce' => wp_create_nonce('wp_rest'),

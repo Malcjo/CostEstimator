@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import FrontendApp from './FrontendApp.jsx';
-const adminRoot = document.getElementById('root');
 
+const adminRoot = document.getElementById('root');
 const frontendRoot = document.getElementById('estimator-root');
 
 if(adminRoot){

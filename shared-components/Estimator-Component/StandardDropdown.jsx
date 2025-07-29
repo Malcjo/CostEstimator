@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 
 
-export default function StandardDropdown({label, options = {}, onSelect}){
+export default function StandardDropdown({id, label, options = {}, onSelect}){
 //porperties for the component, label, options, onSelect
     const [selected, setSelected] = useState('');//stores currently selected key from dropdown
     const [cost, setCost] = useState('-');//stores value from cost column
+    const ID = id;
 
     useEffect(() =>{
         //This fires whenever selected changes

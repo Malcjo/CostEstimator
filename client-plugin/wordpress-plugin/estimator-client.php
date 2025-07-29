@@ -30,4 +30,5 @@
  /*wp_localize_script('ce-admin-js', 'CE_APP_DATA', [
   'mode' => 'client',
   'pro' => true,
-]);*/
+]);
+*/

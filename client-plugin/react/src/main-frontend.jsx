@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+/*import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import FrontendApp from './FrontendApp.jsx'; // New component for shortcode
@@ -11,3 +11,4 @@ if (rootElement) {
     </StrictMode>
   );
 }
+*/
