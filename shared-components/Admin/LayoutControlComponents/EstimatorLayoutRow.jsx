@@ -8,7 +8,7 @@ export default function EstimatorLayoutRow({rows, onConfigChange, pricingGroups}
     const newRows = {
         id: Date.now(), 
         label: '', 
-        type: '', 
+        type: 'Standard', 
         pricingSet: '' 
       };
     onConfigChange([...rows, newRows]);

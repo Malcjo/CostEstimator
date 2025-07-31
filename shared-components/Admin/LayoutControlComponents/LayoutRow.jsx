@@ -3,6 +3,9 @@ export default function LayoutRow({ row, onChange, onRemove, pricingGroups }) {
   const handlePricingSetChange = (e) => {
     onChange({ ...row, pricingSet: e.target.value });
   }
+    const handleTypeChange = (e) => {
+    onChange({ ...row, type: e.target.value });
+  }
   return (
     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px', padding: '8px', border: '1px solid #ddd', }}>
       <div>
@@ -19,7 +22,7 @@ export default function LayoutRow({ row, onChange, onRemove, pricingGroups }) {
         <label>Type</label>
         <select
         value={row.type}
-        onChange={(e) => handlePricingSetChange('type', e.target.value)}
+        onChange={handleTypeChange}
         style={{marginRight: '10px'}}
         >
           <option value="Standard">Standard dropdown menu</option>
@@ -28,7 +31,9 @@ export default function LayoutRow({ row, onChange, onRemove, pricingGroups }) {
 
       <div>
         <label>Pricing Group:</label>
-        <select value={row.pricingSet || ''} onChange={handlePricingSetChange} style={{ marginRight: 8 }}>
+        <select value={row.pricingSet || ''} 
+        onChange={handlePricingSetChange} 
+        style={{ marginRight: 8 }}>
           <option value="">-- Select Pricing Group --</option>
           {pricingGroups.map(group => (
             <option key={group.id} value={group.groupName}>

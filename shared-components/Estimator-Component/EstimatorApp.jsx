@@ -37,11 +37,11 @@ export default function EstimatorApp({ config }) {
       <tbody>
         {
           layout.map((row) => {
-            console.log(pricingMap);
+            //console.log(pricingMap);
             const pricingGroup = Object.values(pricingMap).find(
               (group) => group.groupName === row.pricingSet
             ) || {};
-            console.log(pricingGroup);
+            //console.log(pricingGroup);
             //const designGroup = designMap[row.designSet] || {};
             const options = (pricingGroup.items || []).reduce((acc, item) => {
               acc[item.label] = {
@@ -54,7 +54,7 @@ export default function EstimatorApp({ config }) {
               };
               return acc;
             }, {});
-            console.log(options);
+            //console.log(options);
             switch (row.type) {
               case "Standard":
                 return (
@@ -86,10 +86,12 @@ export default function EstimatorApp({ config }) {
                 return null;
             }
           })}
-        <div>
+        <tr>
+          <td colSpan="3">
           <label>Total Amount</label>
           <h3>{JSON.stringify(results, null, 2)}</h3>
-        </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   );
