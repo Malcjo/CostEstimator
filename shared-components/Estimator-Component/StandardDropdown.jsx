@@ -18,10 +18,10 @@ export default function StandardDropdown({id, label, options = {}, onSelect}){
         //if nothing or no valid option selected then set cost to a neutral
         //and send back 0 for onSelect
         else{
-            setCost('-');
-            onSelect && onSelect(0);
+            setCost(null);
+            onSelect && onSelect(null);
         }
-    }, [selected]);
+    }, [selected, options]);
 
     return(
         <tr>
@@ -40,10 +40,11 @@ export default function StandardDropdown({id, label, options = {}, onSelect}){
             </td>
             <td>
                 {
-                    cost === '-' ? '-' :
-                    cost.type ==='fixed' ? `$${cost.value}` :
-                    cost.type === 'range' ? `$${cost.lower} - $${cost.higher}`:
-                    'Invalid'
+                    cost === '-' || !cost
+                    ? '-' 
+                    : cost.isRange
+                        ? `$${cost.lower} - $${cost.upper}`
+                        : `$${cost.value}`
                 }
             </td>
         </tr>

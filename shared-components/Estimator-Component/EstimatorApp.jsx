@@ -1,8 +1,10 @@
 import React from "react";
 import StandardDropdown from "./StandardDropdown";
+import { useState, useEffect } from "react";
 
 export default function EstimatorApp({ config }) {
   const { layout = [], pricing = [], design = [] } = config;
+  const [results, setResults] = useState({});
 
   const pricingMap = React.useMemo(() => {
     return pricing.reduce((acc, item) => {
@@ -18,6 +20,18 @@ export default function EstimatorApp({ config }) {
     }, {});
   }, [design]);
 
+
+  useEffect(() => {
+    const initialResults = layout.reduce((acc, row) => {
+      acc[row.label] = {
+              option: "",
+      price: "",
+      taskCount: 0
+      };
+      return acc;
+    }, {});
+    setResults(initialResults);
+  }, [layout]);
   return (
     <table>
       <tbody>
@@ -30,9 +44,14 @@ export default function EstimatorApp({ config }) {
             console.log(pricingGroup);
             //const designGroup = designMap[row.designSet] || {};
             const options = (pricingGroup.items || []).reduce((acc, item) => {
-              acc[item.label] = item.isRange
-                ? { type: "range", lower: item.lower, higher: item.upper }
-                : { type: "fixed", value: item.value };
+              acc[item.label] = {
+                label: item.label,
+                value: item.value,
+                isRange: item.isRange,
+                lower: item.lower,
+                upper: item.upper,
+                taskCount: item.taskCount ?? 1, // include taskCount with a fallback
+              };
               return acc;
             }, {});
             console.log(options);
@@ -43,12 +62,34 @@ export default function EstimatorApp({ config }) {
                     id={row.id}
                     label={row.label}
                     options={options}
+                    onSelect={(selectedOption) => {
+                      setResults((prev) => ({
+                        ...prev,
+                        [row.label]: selectedOption ?
+                        {
+                          option: selectedOption.label,
+                          price: selectedOption.isRange
+                            ? { lower: selectedOption.lower, upper: selectedOption.upper }
+                            : selectedOption.value,
+                          taskCount: selectedOption.taskCount ?? 1
+                        }
+                        : {
+                            option: "",      // blank if not selected
+                            price: "",       // blank price
+                            taskCount: ""     // count as 0
+                          }
+                      }));
+                    }}
                   />
                 );
               default:
                 return null;
             }
           })}
+        <div>
+          <label>Total Amount</label>
+          <h3>{JSON.stringify(results, null, 2)}</h3>
+        </div>
       </tbody>
     </table>
   );

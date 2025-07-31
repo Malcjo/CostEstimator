@@ -15,7 +15,8 @@ export default function PricingGroup({group, onChange, onRemove }) {
       value: '',
       lower: '',
       upper: '',
-      isRange: false
+      isRange: false,
+      taskCount:1,
     };
     console.log("added new Item", newItem);
     onChange({ ...group, items: [...(group.items || []), newItem] });
