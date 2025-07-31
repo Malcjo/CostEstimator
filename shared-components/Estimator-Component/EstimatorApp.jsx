@@ -20,13 +20,37 @@ export default function EstimatorApp({ config }) {
     }, {});
   }, [design]);
 
+  const { total, totalLower, totalUpper, hasRange } = React.useMemo(() => {
+    let total = 0;
+    let totalLower = 0;
+    let totalUpper = 0;
+    let hasRange = false;
+
+    Object.values(results).forEach((entry) => {
+      if (!entry) return;
+
+      if (entry.price && typeof entry.price === "object") {
+        // Price is a range { lower, upper }
+        hasRange = true;
+        totalLower += parseFloat(entry.price.lower || 0);
+        totalUpper += parseFloat(entry.price.upper || 0);
+      } else if (entry.price) {
+        // Price is fixed (number or string)
+        total += parseFloat(entry.price || 0);
+        totalLower += parseFloat(entry.price || 0); // just in case all fixed
+        totalUpper += parseFloat(entry.price || 0);
+      }
+    });
+
+    return { total, totalLower, totalUpper, hasRange };
+  }, [results]);
 
   useEffect(() => {
     const initialResults = layout.reduce((acc, row) => {
       acc[row.label] = {
-              option: "",
-      price: "",
-      taskCount: 0
+        option: "",
+        price: "",
+        taskCount: 0
       };
       return acc;
     }, {});
@@ -66,14 +90,14 @@ export default function EstimatorApp({ config }) {
                       setResults((prev) => ({
                         ...prev,
                         [row.label]: selectedOption ?
-                        {
-                          option: selectedOption.label,
-                          price: selectedOption.isRange
-                            ? { lower: selectedOption.lower, upper: selectedOption.upper }
-                            : selectedOption.value,
-                          taskCount: selectedOption.taskCount ?? 1
-                        }
-                        : {
+                          {
+                            option: selectedOption.label,
+                            price: selectedOption.isRange
+                              ? { lower: selectedOption.lower, upper: selectedOption.upper }
+                              : selectedOption.value,
+                            taskCount: selectedOption.taskCount ?? 1
+                          }
+                          : {
                             option: "",      // blank if not selected
                             price: "",       // blank price
                             taskCount: ""     // count as 0
@@ -88,8 +112,13 @@ export default function EstimatorApp({ config }) {
           })}
         <tr>
           <td colSpan="3">
-          <label>Total Amount</label>
-          <h3>{JSON.stringify(results, null, 2)}</h3>
+            <label>Total Amount</label>
+            <h3>{
+              hasRange
+                ? `$${totalLower} - $${totalUpper}`
+                : `$${total}`
+            }
+            </h3>
           </td>
         </tr>
       </tbody>
