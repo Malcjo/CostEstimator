@@ -3,7 +3,7 @@ import StandardDropdown from "./StandardDropdown";
 import { useState, useEffect } from "react";
 
 export default function EstimatorApp({ config }) {
-  const { layout = [], pricing = [], design = [] } = config;
+  const {version = 1,  layout = [], pricing = [], design = [] } = config;
   const [results, setResults] = useState({});
 
   const pricingMap = React.useMemo(() => {

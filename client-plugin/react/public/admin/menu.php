@@ -1,10 +1,8 @@
 <?php
-add_action('admin_menu', 'ce_register_admin_menu');
+//add_action('admin_menu', 'ce_register_admin_menu');
 add_action('admin_enqueue_scripts', 'ce_enqueue_admin_assets');
 
-
-
-function ce_register_admin_menu() {
+add_action('admin_menu', function (){
   add_menu_page(
     'Cost Estimator',
     'Cost Estimator',
@@ -14,8 +12,12 @@ function ce_register_admin_menu() {
     'dashicons-clipboard',
     3
   );
-}
+});
 
+/*function ce_register_admin_menu() {
+
+}
+*/
 function ce_render_admin_ui() {
 
   echo '<div id="root"></div>';
@@ -46,3 +48,16 @@ function ce_enqueue_admin_assets($hook) {
 
 
 
+/*What is a WordPress nonce?
+It’s a short-lived token WordPress generates to protect against CSRF (Cross-Site Request Forgery).
+
+It’s not encryption. It’s a time-sensitive “are you really this logged-in user, on this site, right now?” check.
+
+Lifetime: effectively up to ~24 hours (two 12-hour “ticks”).
+
+For the REST API, WP uses a special action string: 'wp_rest'.
+You generate the token in PHP and the browser sends it back in each write request.
+
+Why you need it
+Without a nonce, a bad site could trick a logged-in admin into POSTing to your /config endpoint (e.g., via an auto-submitting form in a hidden iframe). The nonce blocks that because the attacker can’t read/generate a valid token for your site/user.
+*/
