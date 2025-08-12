@@ -9,8 +9,8 @@ add_action('admin_menu', function (){
     'manage_options',
     'cost-estimator-dashboard',
     'ce_render_admin_ui',
-    'dashicons-clipboard',
-    3
+    'dashicons-calculator',
+    56
   );
 });
 
@@ -25,6 +25,39 @@ function ce_render_admin_ui() {
 
 
 function ce_enqueue_admin_assets($hook) {
+  if ($hook !== 'toplevel_page_cost-estimator-dashboard') return;
+
+  $build_path = dirname(__FILE__, 2);
+  $js_path    = $build_path . '/assets/index.js';
+  $css_path   = $build_path . '/assets/index.css';
+
+  $js_url  = plugins_url('../assets/index.js', __FILE__);
+  $css_url = plugins_url('../assets/index.css', __FILE__);
+
+
+
+  if(file_exists($js_path)){
+    wp_register_script('ce-main-js', $js_url, [], filemtime($js_path), true);
+    wp_script_add_data('ce-main-js', 'type', 'module');
+
+    // Localize the REST base + NONCE (this token proves the request comes from a logged-in user on this site)
+    wp_localize_script('ce-main-js', 'CE_APP_DATA', [
+      'mode'    => 'client',
+      'pro'     => true,
+      'client'  => 'default',
+      'restUrl' => esc_url_raw(rest_url('cost-estimator/v1')), // e.g., https://site.test/wp-json/cost-estimator/v1
+      'nonce'   => wp_create_nonce('wp_rest'),                  // <-- the REST nonce
+    ]);
+
+    wp_enqueue_script('ce-main-js');
+  }
+
+  if (file_exists($css_path)) {
+    wp_enqueue_style('ce-main-css', $css_url, [], filemtime($css_path));
+  }
+}
+
+/*
   if ($hook !== 'toplevel_page_cost-estimator-dashboard') return;
 
   // Adjust path if your React files are elsewhere
@@ -44,9 +77,7 @@ function ce_enqueue_admin_assets($hook) {
   
   wp_enqueue_script('ce-main-js');
   wp_enqueue_style('ce-main-css', $plugin_url . 'index.css');
-}
-
-
+*/
 
 /*What is a WordPress nonce?
 It’s a short-lived token WordPress generates to protect against CSRF (Cross-Site Request Forgery).

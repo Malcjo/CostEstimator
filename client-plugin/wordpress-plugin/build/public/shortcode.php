@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) exit;
  * This file is at: wordpress-plugin/build/public/shortcode.php
  * Assets are at:   wordpress-plugin/build/assets/index.{js,css}
  */
-function ce_register_frontend_assets_fixed() {
+function ce_register_frontend_assets() {
     // Filesystem paths for existence/version checks
     $build_path  = dirname(__FILE__, 2);     // .../wordpress-plugin/build
     $js_path     = $build_path . '/assets/index.js';
@@ -24,13 +24,7 @@ function ce_register_frontend_assets_fixed() {
 
     // Register JS if it exists
     if (file_exists($js_path)) {
-        wp_register_script(
-            'cost-estimator-frontend',
-            $js_url,
-            [],
-            filemtime($js_path), // cache-bust with file mtime
-            true                 // in footer
-        );
+        wp_register_script('cost-estimator-frontend', $js_url,[],filemtime($js_path), true);
         wp_script_add_data('cost-estimator-frontend', 'type', 'module');
     } else {
         error_log('[CostEstimator] Missing JS asset at ' . $js_path);
@@ -38,12 +32,7 @@ function ce_register_frontend_assets_fixed() {
 
     // Register CSS only if present (avoids 404 when no CSS emitted)
     if (file_exists($css_path)) {
-        wp_register_style(
-            'cost-estimator-frontend',
-            $css_url,
-            [],
-            filemtime($css_path)
-        );
+        wp_register_style('cost-estimator-frontend', $css_url,[],filemtime($css_path));
     }
 }
 
@@ -55,7 +44,7 @@ add_shortcode('CostEstimator', function($atts){
     $atts = shortcode_atts(['client' => 'default'], $atts, 'CostEstimator');
 
     // Make sure assets are registered
-    ce_register_frontend_assets_fixed();
+    ce_register_frontend_assets();
 
     // Localize boot data onto the registered handle
     if (wp_script_is('cost-estimator-frontend', 'registered')) {
@@ -79,7 +68,6 @@ add_shortcode('CostEstimator', function($atts){
     // Render a STATIC mount point id for compatibility with your existing React entry
     $root_id = 'estimator-root';
     ob_start(); ?>
-      <div id="<?php echo esc_attr($root_id); ?>" data-client="<?php echo esc_attr($atts['client']); ?>"></div>
-    <?php
+      <div id="<?php echo esc_attr($root_id); ?>" data-client="<?php echo esc_attr($atts['client']); ?>"></div><?php
     return ob_get_clean();
 });
